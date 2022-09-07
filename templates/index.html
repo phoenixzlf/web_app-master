@@ -1,0 +1,70 @@
+{% extends "base_generic.html" %}
+{% block form %}
+<div class="card mb-3">
+    <div class="card-header">Filters</div>
+    <div class="card-body"><form>
+        {{form}}
+        <button class="btn btn-outline-success my-2 my-sm-2 float-right" type="submit">SEARCH</button>
+    </form></div>
+</div>
+{% endblock %}
+
+{% load litlookup_tags %}
+{% block content %}
+<p>{{num_res}} documents found {% if subtype and subtype != '' %}of type "<i>{{subtype}}</i>" {% endif %} {% if search_kw %}with keyphrase "<i>{{search_kw}}</i>" {% endif %}</p>
+
+{% for article in articles %}
+<div class="card my-2" id="cardinfo">
+    <div class="card-body position-relative">
+        <h5 class="card-title">{{article.title}}</h5>
+        <span style="display: block;"><small>{% parse_delimited article.author_names ';' ' / ' %}</small></span>
+        <span style="display: block;"><small><strong>Publication: </strong>{{article.publicationName|default_if_none:''}} - {{article.coverDisplayDate|default_if_none:''}}</small></span>
+        <p class="my-2">{{article.description|truncatechars:400}}</p>
+        <a href="#" class="stretched-link" data-toggle="modal" data-target="#exampleModal"></a>
+    </div>
+    <div class="card-footer"><strong>Keywords: </strong>{{article.authkeywords|default_if_none:'None provided'}}</div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{article.title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{ article.title}}
+          {{ article.description}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    </div>
+    </div>
+</div>
+{% endfor %}
+
+{% if articles.has_other_pages %}
+<ul class="pagination float-right">
+    {% if articles.has_previous %}
+    <li class="page-item"><a class="page-link" href="?{% url_replace request 'page' articles.previous_page_number %}">&laquo;</a></li>
+    {% else %}
+    <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+    {% endif %}
+    {% for i in page_range %}
+    {% if articles.number == i %}
+    <li class="active page-item"><span class="page-link">{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+    <li class="page-item"><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+    {% endif %}
+    {% endfor %}
+    {% if articles.has_next %}
+    <li class="page-item"><a class="page-link" href="?{% url_replace request 'page' articles.next_page_number %}">&raquo;</a></li>
+    {% else %}
+    <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+    {% endif %}
+</ul>
+{% endif %}
+{% endblock %}
