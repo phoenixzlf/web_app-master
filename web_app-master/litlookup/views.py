@@ -19,9 +19,22 @@ import sys
 from litlookup.utilities import *
 
 def index(request):
+    print(request)
     num_articles = Article.objects.all().count()
     last_updated = Article.objects.all().aggregate(Max('last_updated')).get('last_updated__max')
     num_sources = len(Article.objects.order_by().values('publicationName').distinct())
+
+    # response of db basic info
+    detail_only = request.GET.get('detail')
+    if detail_only == "1":
+        print("1")
+        response = {
+            'num_articles': num_articles,
+            'last_updated': last_updated,
+            'num_sources': num_sources,
+        }
+        return JsonResponse(response)
+
     subtypes = list((Article.objects.order_by('subtypeDescription').exclude(
         subtypeDescription__isnull=True).values_list('subtypeDescription', 'subtypeDescription').distinct()))
     subtypes = sorted([('', 'All')] + subtypes, key=lambda tup: tup[1])
@@ -71,6 +84,8 @@ def index(request):
     #     articles = paginator.page(1)
     # except EmptyPage:
     #     articles = paginator.page(paginator.num_pages)
+
+
 
     form = articleFilterForm(subtype_choices=subtypes)
     form.fields['kw_search'].widget.attrs['value'] = search_kw if search_kw else ''
