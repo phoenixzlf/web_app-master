@@ -6,10 +6,11 @@ export const CLDResultCard = styled(Card)`
 `
 
 export const CLDResultCardBody = styled(Card.Body)`
-    background-color: #282c34;
+    background-color: #002855;
 `
 
 export const CLDResultCardTitle = styled(Card.Title)`
+    color: #E84A27;
     padding: 15px;
 `
 

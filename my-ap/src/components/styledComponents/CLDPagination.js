@@ -14,27 +14,27 @@ const CLPPaginationC = styled(Pagination)`
 
 const CLPPaginationItem = styled(Pagination.Item)`
   a{
-    color: #282c34;
+    color: #002855;
   }
   li{
-    color: #282c34;
-    background-color: #282c34;
+    color: #002855;
+    background-color: #002855;
   }
   span{
-    color: #282c34;
-    background-color: #282c34 !Important;
+    color: #002855;
+    background-color: #002855 !Important;
   }
 `
 
 const CLPPaginationEllipsis = styled(Pagination.Ellipsis)`
   a{
-    color: #282c34;
+    color: #002855;
   }
   li{
-    color: #282c34;
+    color: #002855;
   }
   span{
-    color: #282c34;
+    color: #002855;
   }
 `
 

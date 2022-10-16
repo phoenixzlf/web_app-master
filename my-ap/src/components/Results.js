@@ -26,6 +26,8 @@ function Result() {
         search_CLD(query, docType).then(res => {
             setData(res.data)
             setArticles(res.data.articles)
+            console.log("here")
+            console.log(res.data.articles[50])
             localStorage.setItem('articles', JSON.stringify(res.data))
             // const indexOfLastPost = currentPage * 10;
             // const indexOfFirstPost = indexOfLastPost - 10;
@@ -69,7 +71,7 @@ function Result() {
         console.log(article)
         localStorage.setItem('article',JSON.stringify(article.fields))
         if(localStorage.getItem('article'))
-            navigate('/detail');
+            navigate(`/detail/${docType}/${query}`);
     }
 
     return(
@@ -100,7 +102,7 @@ function Result() {
                             <CLDResultCard>
                                 <CLDResultCardBody>
                                     <CLDResultCardTitle
-                                        className="text-warning font-weight-bold lead">{article.fields.title}</CLDResultCardTitle>
+                                        className="font-weight-bold lead">{article.fields.title}</CLDResultCardTitle>
                                     <Card.Subtitle
                                         className="mb-2 text-white">Publication: {article.fields.publicationName}</Card.Subtitle>
                                     <CLDResultCardText className="text-white">

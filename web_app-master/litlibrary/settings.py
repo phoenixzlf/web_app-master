@@ -26,7 +26,7 @@ SECRET_KEY = '#a$b@p!gf%aujhrqzqgp0)3mf+$v_wcj^vp2c%j#0*38^08+ej'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -83,7 +83,8 @@ DATABASES = {
         'NAME': 'cyber_literature',
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            'host': 'mongodb://iRiskCyberLit:cyberlitpass@172.22.15.67:27017/cyber_literature?authSource=admin'
+            # 'host': 'mongodb://iRiskCyberLit:cyberlitpass@172.22.15.67:27017/cyber_literature?authSource=admin'
+            'host': 'mongodb+srv://iRiskCyberLit:cyberlitpass@cluster0.zk9hsjl.mongodb.net'
         }
     }
 }
@@ -91,7 +92,10 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
-CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://0.0.0.0:80",
+# ]
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',

@@ -4,6 +4,7 @@ import faiss
 import pandas as pd
 import numpy as np
 
+
 class LitlookupConfig(AppConfig):
     name = 'litlookup'
 
@@ -36,3 +37,4 @@ class SemanticSearchConfig(AppConfig):
         top_k_ids = list(np.unique(top_k_ids))
         results = [self.fetch_article_info(idx, df) for idx in top_k_ids]
         return results
+
